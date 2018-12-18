@@ -15,4 +15,10 @@
 * [Chapter 6 分片](PARTII/chapter6.md)
 * [Chapter 7 事物处理](PARTII/chapter7.md)
 * [Chapter 8 分布式系统的问题](PARTII/chapter8.md)
+* [Chapter 9 一致性和共识](PARTII/chapter9.md)
 
+## PART III 导出数据
+
+* [Chapter 10 批量处理](PARTII/chapter10.md)
+* [Chapter 11 流处理](PARTII/chapter11.md)
+* [Chapter 12 分布式系统的未来](PARTII/chapter12.md)
