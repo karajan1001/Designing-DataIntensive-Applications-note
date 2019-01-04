@@ -51,6 +51,37 @@ Unix命令的几个大优势。
 不过它有一个致命弱点，只能运行在单机上。
 
 ## MapReduce
+`MapReduce`就像是在分布式系统的`Unix Tool`每个任务就相当于一次`Unix`进程和`Unix Tool`一样，不会改变任何输出。它的输入输出都是标准`HDFS`文件。`HDFS`采用不共享原则（NAS是共享硬盘)，不需要任何特殊硬件。`HDFS`可以使用每台机器上的任何磁盘，将文件存储备份，和`RAID`不同不需要任何额外硬件，只依赖网络。
+
+### MapReduce 任务执行
+以上面例子为例。Map对应这个过程:
+```bash
+awk '{print $7}' 
+```
+Reduce对应这个过程:
+```bash
+uniq -c
+```
+其他过程比如:
+```bash
+cat file |  # 读取日志文件
+```
+是由文件解析器提供。
+```bash
+sort
+```
+则是由系统自动完成
+
+为了实现一个`MapReduce`任务我们需要提供一个`Mapper`方程和一个`Reducer`方程。
+
+#### MapReduce 的分布式执行
+MapReduce和`Unix`工具的一个很大不同在于它可以分布式执行，而不需要做任何的并行修改。MapReduce对每部分数据启动一个单独的Mapper。Hadoop采取就近计算原则，会让数据计算发生在数据存储的机器上，减少网络开销。`Jar`包被发送到执行机器上，让`Mapper`处理，处理完的结果会存储在HDFS上并排序，之后按照HaskKey来确定执行`Reduce`任务机器的。`Reducer`获取`Mapper`结果的过程叫`Shuffle`。
+
+#### MapReduce 工作流
+单个`MapReduce`能完成的功能很有限，所以经常要串起来形成工作流。不过`Hadoop MapReuce`没有对工作流优化，所有内容必须自己写。而且一个工作必须等上一个工作完成才能开始。为了管理这些工作流，人们开发了很多工具。
+
+### Reduce任务中的join和group操作。
+
 
 ## 超越MapReduce
 
